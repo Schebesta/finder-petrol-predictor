@@ -17,6 +17,11 @@
 *,*::before,*::after{box-sizing:border-box}
 :root{
   --blue:#0261FE; --blue-700:#0046C7; --blue-900:#002E85;
+  /* Hero/CTA gradients are a shade deeper than brand blue so the light-blue
+     secondary text on top clears WCAG AA (4.5:1). Brand #0261FE is kept for
+     every accent on white, where it measures 5.16:1. */
+  --grad-1:#0055DD; --grad-2:#00409F; --grad-3:#002463;
+  --on-blue:#EDF4FF;
   --ink:#0B1B33; --muted:#51637E; --line:#DCE4F0;
   --bg:#FFFFFF; --bg-alt:#F3F7FD;
   --wait:#B33A00; --wait-bg:#FFF2EA; --wait-line:#F5C9AE;
@@ -51,22 +56,22 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,su
 /* ---------- header ---------- */
 .site-header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
 .site-header .wrap{display:flex;align-items:center;gap:12px;min-height:62px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;font-size:1.15rem;color:var(--ink);text-decoration:none}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;font-size:1.15rem;color:var(--ink);text-decoration:none;min-height:44px;padding-right:4px}
 .brand-mark{width:30px;height:30px;border-radius:8px;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:1.05rem;line-height:1;font-weight:800}
 .brand-sub{color:var(--muted);font-weight:600;font-size:.84rem;letter-spacing:0;border-left:1px solid var(--line);padding-left:12px}
 .pill-demo{margin-left:auto;font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--blue-700);background:#E8F0FF;border:1px solid #C9DCFF;padding:5px 10px;border-radius:999px}
 
 /* ---------- hero ---------- */
-.hero{background:linear-gradient(160deg,#0261FE 0%,#0046C7 55%,#002E85 100%);color:#fff;padding:clamp(36px,5vw,64px) 0 0}
+.hero{background:linear-gradient(160deg,var(--grad-1) 0%,var(--grad-2) 55%,var(--grad-3) 100%);color:#fff;padding:clamp(36px,5vw,64px) 0 0}
 .hero h1{color:#fff;max-width:17ch}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#CFE0FF;margin-bottom:14px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--on-blue);margin-bottom:14px}
 .dot{width:8px;height:8px;border-radius:50%;background:#58E0A3;box-shadow:0 0 0 4px rgba(88,224,163,.22)}
-.hero-lead{margin-top:16px;max-width:56ch;color:#D9E6FF;font-size:clamp(1rem,.95rem + .35vw,1.17rem)}
+.hero-lead{margin-top:16px;max-width:56ch;color:var(--on-blue);font-size:clamp(1rem,.95rem + .35vw,1.17rem)}
 .stats{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));margin:28px 0 0;padding:0;list-style:none}
-.stat{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:var(--radius);padding:16px 18px;backdrop-filter:blur(2px)}
-.stat dt{font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#BDD4FF}
+.stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.26);border-radius:var(--radius);padding:16px 18px}
+.stat dt{font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--on-blue)}
 .stat dd{margin:6px 0 0;font-size:1.55rem;font-weight:800;letter-spacing:-.025em}
-.stat .sub{display:block;font-size:.84rem;font-weight:600;color:#CFE0FF;letter-spacing:0;margin-top:2px}
+.stat .sub{display:block;font-size:.84rem;font-weight:600;color:var(--on-blue);letter-spacing:0;margin-top:2px}
 .hero-fade{height:clamp(28px,4vw,52px)}
 
 /* ---------- verdict ---------- */
@@ -97,12 +102,13 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,su
 .controls{border-top:1px solid var(--line);background:var(--bg-alt);padding:clamp(18px,2.5vw,24px) clamp(22px,3vw,34px);display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));align-items:end}
 .field label{display:block;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
 .field select{width:100%;font:inherit;font-size:1rem;font-weight:600;color:var(--ink);background:#fff;border:1px solid #C3D1E5;border-radius:10px;padding:11px 13px;min-height:46px}
-.field input[type=range]{width:100%;accent-color:var(--blue);min-height:34px}
+.field input[type=range]{width:100%;accent-color:var(--blue);min-height:44px}
 .range-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
 .range-top output{font-weight:800;font-size:1rem;color:var(--ink)}
 .saving{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px}
 .saving .k{font-size:.74rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
 .saving .v{font-size:1.5rem;font-weight:800;letter-spacing:-.02em;color:var(--buy)}
+.saving--cost .v{color:var(--wait)}
 
 /* ---------- chart ---------- */
 .chart-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:clamp(18px,2.6vw,28px)}
@@ -114,6 +120,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,su
 .swatch--now{width:11px;height:11px;border-radius:50%;background:#D64500}
 .swatch--low{width:11px;height:11px;border-radius:50%;background:#fff;border:2px solid #0A6B45}
 figure{margin:0}
+.chart-wide svg,.chart-narrow svg{display:block;width:100%;height:auto}
 .chart-wide{display:none}
 .chart-narrow{display:block}
 @media(min-width:720px){.chart-wide{display:block}.chart-narrow{display:none}}
@@ -122,7 +129,7 @@ details{margin-top:16px;border:1px solid var(--line);border-radius:12px;backgrou
 summary{cursor:pointer;padding:13px 16px;font-weight:700;font-size:.93rem;color:var(--blue-700);list-style-position:inside}
 details[open] summary{border-bottom:1px solid var(--line)}
 .table-scroll{overflow-x:auto;padding:4px 16px 16px}
-table{border-collapse:collapse;width:100%;min-width:360px;font-size:.92rem;margin-top:12px}
+table{border-collapse:collapse;width:100%;min-width:316px;font-size:.92rem;margin-top:12px}
 caption{text-align:left;font-weight:700;padding-bottom:8px;font-size:.92rem}
 th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line)}
 thead th{font-size:.74rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
@@ -141,11 +148,15 @@ tbody th{font-weight:600}
 .lock-grid{display:grid;gap:clamp(20px,3vw,34px);grid-template-columns:minmax(0,1fr)}
 @media(min-width:900px){.lock-grid{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}}
 .steps{counter-reset:s;list-style:none;margin:22px 0 0;padding:0;display:grid;gap:16px}
+/* Two grid items only — the ::before marker and a single .step-body wrapper.
+   Putting <strong> and <span> in the grid directly pushes the span onto a
+   second row inside the 38px marker column. */
 .steps li{counter-increment:s;display:grid;grid-template-columns:38px minmax(0,1fr);gap:14px;align-items:start}
 .steps li::before{content:counter(s);width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;font-weight:800;display:grid;place-items:center;font-size:.98rem}
-.steps strong{display:block;margin-bottom:2px}
-.steps span{color:var(--muted);font-size:.95rem}
-.do-dont{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.step-body{min-width:0}
+.steps strong{display:block;margin-bottom:3px}
+.steps span{display:block;color:var(--muted);font-size:.95rem}
+.do-dont{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;align-self:start}
 .do-dont h3{padding:16px 20px 0}
 .dd-list{list-style:none;margin:0;padding:14px 20px 20px;display:grid;gap:12px}
 .dd-list li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:11px;font-size:.95rem;align-items:start}
@@ -157,9 +168,9 @@ tbody th{font-weight:600}
 .callout .big{font-weight:800;color:var(--ink);font-size:1.08rem}
 
 /* ---------- cta ---------- */
-.cta{background:linear-gradient(160deg,#0261FE,#002E85);color:#fff;border-radius:20px;padding:clamp(26px,4vw,44px);text-align:center}
+.cta{background:linear-gradient(160deg,var(--grad-1),var(--grad-3));color:#fff;border-radius:20px;padding:clamp(26px,4vw,44px);text-align:center}
 .cta h2{color:#fff}
-.cta p{color:#D9E6FF;margin:14px auto 0;max-width:52ch}
+.cta p{color:var(--on-blue);margin:14px auto 0;max-width:52ch}
 .btn-row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:24px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:50px;padding:13px 26px;border-radius:999px;font-weight:700;font-size:1rem;text-decoration:none;border:2px solid transparent;cursor:pointer;font-family:inherit}
 .btn--primary{background:#fff;color:var(--blue-700)}
@@ -292,7 +303,7 @@ tbody th{font-weight:600}
         </div>
         <figure>
           <div class="chart-wide">
-            <svg viewBox="0 0 840 360" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true" focusable="false" font-family="inherit">
+            <svg viewBox="0 0 840 360" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true" focusable="false" font-family="inherit">
   <defs>
     <linearGradient id="fpArea840" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#0261FE" stop-opacity="0.26"/>
@@ -347,7 +358,7 @@ tbody th{font-weight:600}
 </svg>
           </div>
           <div class="chart-narrow">
-            <svg viewBox="0 0 420 320" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true" focusable="false" font-family="inherit">
+            <svg viewBox="0 0 420 320" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true" focusable="false" font-family="inherit">
   <defs>
     <linearGradient id="fpArea420" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#0261FE" stop-opacity="0.26"/>
@@ -355,7 +366,6 @@ tbody th{font-weight:600}
     </linearGradient>
   </defs>
   <rect x="36" y="22.0" width="372.0" height="69.9" fill="#D64500" opacity="0.07"/>
-  <text x="402" y="35.0" text-anchor="end" font-size="10" fill="#A8370A" font-weight="600">Peak zone</text>
   <line x1="36" y1="266.7" x2="408" y2="266.7" stroke="#DCE4F0" stroke-width="1"/>
   <text x="28" y="270.5" text-anchor="end" font-size="11" fill="#5A6B85">150</text>
   <line x1="36" y1="196.8" x2="408" y2="196.8" stroke="#DCE4F0" stroke-width="1"/>
@@ -476,9 +486,9 @@ tbody th{font-weight:600}
           <h2 id="lock-h">The Fuel Lock strategy</h2>
           <p class="lede">Several retailers let you lock a price in their app and redeem it later — usually up to 150 litres within 7 to 30 days. Used properly, it turns one good day into a month of good days. Used badly, it freezes you into the peak.</p>
           <ol class="steps">
-            <li><strong>Wait for the trough, not the headline.</strong><span>Lock only when the cycle is in its bottom 3–5 days. Our predictor flags that window — right now it's around 3 November.</span></li>
-            <li><strong>Lock the lowest price you can see, not the one at your usual servo.</strong><span>Lock prices are usually set from a specific site. Check a few nearby before you commit — a 12c difference on 150L is $18.</span></li>
-            <li><strong>Redeem across multiple fills.</strong><span>A 150L lock is roughly three tanks. Use it through the spike, and re-lock at the next trough. Done right you never buy at the peak again.</span></li>
+            <li><span class="step-body"><strong>Wait for the trough, not the headline.</strong><span>Lock only when the cycle is in its bottom 3–5 days. Our predictor flags that window — right now it's around 3 November.</span></span></li>
+            <li><span class="step-body"><strong>Lock the lowest price you can see, not the one at your usual servo.</strong><span>Lock prices are usually set from a specific site. Check a few nearby before you commit — a 12c difference on 150L is $18.</span></span></li>
+            <li><span class="step-body"><strong>Redeem across multiple fills.</strong><span>A 150L lock is roughly three tanks. Use it through the spike, and re-lock at the next trough. Done right you never buy at the peak again.</span></span></li>
           </ol>
         </div>
 
@@ -554,15 +564,18 @@ tbody th{font-weight:600}
 (function () {
   'use strict';
 
+  // price = today's average, low = next forecast trough, peak = next forecast
+  // spike. "wait" regions are at the peak now, so their comparison is
+  // price - low; "buy" regions are at the bottom, so theirs is peak - price.
   var REGIONS = {
-    metro:     { name: 'Sydney metro',             price: 241.8, low: 168.4, lowDate: '3 November', verdict: 'wait', conf: 86 },
-    cbd:       { name: 'Sydney CBD & inner city',  price: 248.3, low: 174.9, lowDate: '3 November', verdict: 'wait', conf: 88 },
-    innerwest: { name: 'the Inner West',           price: 239.6, low: 166.2, lowDate: '2 November', verdict: 'wait', conf: 85 },
-    north:     { name: 'the North Shore',          price: 245.1, low: 171.0, lowDate: '4 November', verdict: 'wait', conf: 84 },
-    west:      { name: 'Western Sydney',           price: 232.4, low: 159.8, lowDate: '1 November', verdict: 'wait', conf: 89 },
-    southwest: { name: 'the South West',           price: 229.7, low: 161.3, lowDate: '1 November', verdict: 'wait', conf: 83 },
-    coast:     { name: 'the Central Coast',        price: 236.0, low: 169.5, lowDate: '5 November', verdict: 'wait', conf: 79 },
-    illawarra: { name: 'the Illawarra',            price: 189.2, low: 182.6, lowDate: '26 October', verdict: 'buy',  conf: 81 }
+    metro:     { name: 'Sydney metro',             price: 241.8, low: 168.4, peak: 241.8, lowDate: '3 November', verdict: 'wait', conf: 86 },
+    cbd:       { name: 'Sydney CBD & inner city',  price: 248.3, low: 174.9, peak: 248.3, lowDate: '3 November', verdict: 'wait', conf: 88 },
+    innerwest: { name: 'the Inner West',           price: 239.6, low: 166.2, peak: 239.6, lowDate: '2 November', verdict: 'wait', conf: 85 },
+    north:     { name: 'the North Shore',          price: 245.1, low: 171.0, peak: 245.1, lowDate: '4 November', verdict: 'wait', conf: 84 },
+    west:      { name: 'Western Sydney',           price: 232.4, low: 159.8, peak: 232.4, lowDate: '1 November', verdict: 'wait', conf: 89 },
+    southwest: { name: 'the South West',           price: 229.7, low: 161.3, peak: 229.7, lowDate: '1 November', verdict: 'wait', conf: 83 },
+    coast:     { name: 'the Central Coast',        price: 236.0, low: 169.5, peak: 236.0, lowDate: '5 November', verdict: 'wait', conf: 79 },
+    illawarra: { name: 'the Illawarra',            price: 189.2, low: 182.6, peak: 246.5, lowDate: '26 October', verdict: 'buy',  conf: 81 }
   };
 
   var card    = document.getElementById('verdictCard');
@@ -577,6 +590,7 @@ tbody th{font-weight:600}
   var tankOut = document.getElementById('tankOut');
   var savLbl  = document.getElementById('savingLabel');
   var savVal  = document.getElementById('savingValue');
+  var savBox  = savVal ? savVal.closest('.saving') : null;
 
   if (!card || !region || !tank) { return; }
 
@@ -587,7 +601,6 @@ tbody th{font-weight:600}
   function render() {
     var r = REGIONS[region.value] || REGIONS.metro;
     var litres = parseInt(tank.value, 10) || 55;
-    var gap = r.price - r.low;
 
     tankOut.textContent = litres + 'L';
 
@@ -595,6 +608,7 @@ tbody th{font-weight:600}
     card.classList.toggle('verdict--buy', r.verdict === 'buy');
     badge.classList.toggle('badge--wait', r.verdict === 'wait');
     badge.classList.toggle('badge--buy', r.verdict === 'buy');
+    if (savBox) { savBox.classList.toggle('saving--cost', r.verdict === 'buy'); }
 
     confTxt.textContent = (r.conf >= 85 ? 'High' : 'Moderate') + ' · ' + r.conf + '%';
     confBar.style.width = r.conf + '%';
@@ -607,15 +621,15 @@ tbody th{font-weight:600}
       note.innerHTML = '<strong>If you\u2019re running on fumes:</strong> put in 15\u201320L to get you through, then fill properly around <strong>' +
         r.lowDate + '</strong>, when we expect about <strong>' + r.low.toFixed(1) + 'c/L</strong> in ' + r.name + '.';
       savLbl.textContent = 'Saving on a ' + litres + 'L fill if you wait';
-      savVal.textContent = money((gap * litres) / 100);
+      savVal.textContent = money(((r.price - r.low) * litres) / 100);
     } else {
       word.textContent = 'Buy';
       sub.textContent = r.name.charAt(0).toUpperCase() + r.name.slice(1) +
         ' is averaging ' + r.price.toFixed(1) + 'c/L — close to its cycle low.';
       note.innerHTML = '<strong>Fill the tank today.</strong> ' + r.name.charAt(0).toUpperCase() + r.name.slice(1) +
         ' is running a cycle behind Sydney metro and is near the bottom. This is also the week to use a <a href="#lock-h">Fuel Lock</a> if your retailer offers one.';
-      savLbl.textContent = 'Extra cost if you wait for the spike';
-      savVal.textContent = money((gap * litres) / 100);
+      savLbl.textContent = 'Extra cost on a ' + litres + 'L fill if you wait for the spike';
+      savVal.textContent = money(((r.peak - r.price) * litres) / 100);
     }
   }
 

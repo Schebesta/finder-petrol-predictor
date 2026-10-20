@@ -32,7 +32,7 @@ export const FORECAST = [
 const Y_MIN = 140;
 const Y_MAX = 255;
 
-function makeChart({ w, h, pad, yTicks, xEvery, fs, dotR }) {
+function makeChart({ w, h, pad, yTicks, xEvery, fs, dotR, bandLabel = true }) {
   const x0 = pad.l;
   const x1 = w - pad.r;
   const y0 = pad.t;
@@ -69,7 +69,11 @@ function makeChart({ w, h, pad, yTicks, xEvery, fs, dotR }) {
   const bandTop = sy(Y_MAX);
   const bandBottom = sy(225);
   p(`<rect x="${x0}" y="${bandTop.toFixed(1)}" width="${(x1 - x0).toFixed(1)}" height="${(bandBottom - bandTop).toFixed(1)}" fill="#D64500" opacity="0.07"/>`);
-  p(`<text x="${x1 - 6}" y="${(bandTop + fs + 2).toFixed(1)}" text-anchor="end" font-size="${fs - 1}" fill="#A8370A" font-weight="600">Peak zone</text>`);
+  // On the narrow variant the "today" callout sits where this label would go,
+  // so the band is left unlabelled there (the figcaption carries the meaning).
+  if (bandLabel) {
+    p(`<text x="${x1 - 6}" y="${(bandTop + fs + 2).toFixed(1)}" text-anchor="end" font-size="${fs - 1}" fill="#A8370A" font-weight="600">Peak zone</text>`);
+  }
 
   // --- gridlines + y labels
   for (const t of yTicks) {
@@ -128,14 +132,15 @@ export function wideSvg() {
 
   // Decorative: the figure carries a text summary + a real data table for
   // assistive tech, so both SVG variants stay out of the accessibility tree.
-  return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true" focusable="false" font-family="inherit">
+  // Sizing is left to CSS — height="auto" is not a valid SVG length.
+  return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true" focusable="false" font-family="inherit">
   ${out.join('\n  ')}
 </svg>`;
 }
 
 export function narrowSvg() {
   const w = 420, h = 320;
-  const c = makeChart({ w, h, pad: { l: 36, r: 12, t: 22, b: 30 }, yTicks: [150, 180, 210, 240], xEvery: 5, fs: 11, dotR: 3.5 });
+  const c = makeChart({ w, h, pad: { l: 36, r: 12, t: 22, b: 30 }, yTicks: [150, 180, 210, 240], xEvery: 5, fs: 11, dotR: 3.5, bandLabel: false });
   const { out, today, target } = c;
 
   out.push(`<g>
@@ -149,7 +154,7 @@ export function narrowSvg() {
     <text x="${(target.x - 56).toFixed(1)}" y="${(target.y + 37).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">~168c · 3 Nov</text>
   </g>`);
 
-  return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true" focusable="false" font-family="inherit">
+  return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-hidden="true" focusable="false" font-family="inherit">
   ${out.join('\n  ')}
 </svg>`;
 }
